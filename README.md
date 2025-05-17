@@ -1,104 +1,106 @@
 # React Auth Challenge
 
-Esta aplicación implementa un sistema de autenticación con React y TypeScript, incluyendo rutas protegidas y visualización eficiente de grandes conjuntos de datos.
+This application implements an authentication system with React and TypeScript, including protected routes and efficient visualization of large data sets.
 
-## Características
+![Login!](https://raw.githubusercontent.com/infantito/tenpo-auth/refs/heads/main/src/assets/tenpo-auth.png)
 
-- Sistema de autenticación con login/logout
-- Arquitectura de rutas públicas y privadas
-- Visualización eficiente de 2000 elementos usando virtualización
-- Diseño completamente responsivo (móvil y escritorio)
-- Configuración de Axios con interceptores para manejo de token
-- Almacenamiento del token en sesión (sessionStorage)
+![Dashboard!](https://raw.githubusercontent.com/infantito/tenpo-auth/refs/heads/main/src/assets/tenpo-home.png)
 
-## Tecnologías utilizadas
+## Features
+
+- Authentication system with login/logout
+- Architecture for public and private routes
+- Efficient visualization of 2000 items using virtualization
+- Fully responsive design (mobile and desktop)
+- Axios configuration with interceptors for token handling
+- Token storage in session (sessionStorage)
+
+## Technologies used
 
 - React 19.1.0
 - TypeScript ~5.8.3
 - React Router Dom 6.22.3
 - Axios 1.9.0
-- React Window 1.8.11 (virtualización)
+- React Window 1.8.11 (virtualization)
 - TailwindCSS 3.4.1
-- Lucide React 0.511.0 (iconos)
+- Lucide React 0.511.0 (icons)
 - Vite 6.3.5
 
-## Cómo ejecutar el proyecto
+## How to run the project
 
-### Requisitos previos
+### Prerequisites
 
-- Node.js 16+
-- npm o yarn
+- Node.js 20+
+- npm
 
-### Instalación
+### Installation
 
-1. Clona este repositorio
+1. Clone this repository
 
 ```bash
-git clone https://github.com/tu-usuario/react-auth-challenge.git
-cd react-auth-challenge
+git clone git@github.com:infantito/tenpo-auth.git
+cd tenpo-auth
 ```
 
-1. Instala las dependencias
+1. Install dependencies
 
 ```bash
-npm install
-# o
-yarn
+npm ci
 ```
 
-1. Inicia el servidor de desarrollo
+1. Start the development server
 
 ```bash
-npm run dev
-# o
+npm run start
+# or
 yarn dev
 ```
 
-1. Abre tu navegador en `http://localhost:5173`
+1. Open your browser at `http://localhost:5173`
 
-## Arquitectura de la aplicación
+## Application architecture
 
-### Estructura de directorios
+### Directory structure
 
 ```markdown
 src/
-  ├── assets/          # Archivos estáticos (imágenes, fuentes, etc.)
-  ├── components/      # Componentes reutilizables
-  ├── constants/       # Constantes y configuraciones
-  ├── containers/      # Componentes de layout o diseño general
-  ├── context/         # Contextos de React, incluido AuthContext
+  ├── assets/          # Static files (images, fonts, etc.)
+  ├── components/      # Reusable components
+  ├── constants/       # Constants and configurations
+  ├── containers/      # Layout or general design components
+  ├── context/         # React contexts, including AuthContext
   ├── hooks/           # Custom hooks
-  ├── pages/           # Páginas principales
-  ├── routes/          # Definición de rutas y navegación
-  ├── services/        # Servicios de API
-  ├── types/           # Definiciones de tipos TypeScript
-  ├── utils/           # Funciones utilitarias y helpers
-  ├── app.tsx          # Componente principal
-  └── main.tsx         # Punto de entrada
+  ├── pages/           # Main pages
+  ├── routes/          # Route and navigation definitions
+  ├── services/        # API services
+  ├── types/           # TypeScript type definitions
+  ├── utils/           # Utility functions and helpers
+  ├── app.tsx          # Main component
+  └── main.tsx         # Entry point
 ```
 
-### Contexto de autenticación
+### Authentication context
 
-La aplicación utiliza el Context API de React para manejar el estado de autenticación. El token se almacena en sessionStorage para persistir entre recargas de página pero se limpia al cerrar el navegador.
+The application uses React's Context API to manage authentication state. The token is stored in sessionStorage to persist between page reloads but is cleared when the browser is closed.
 
-### Rutas protegidas
+### Protected routes
 
-Se implementan componentes `ProtectedRoute` y `PublicRoute` para controlar el acceso a las rutas basado en el estado de autenticación.
+`ProtectedRoute` and `PublicRoute` components are implemented to control access to routes based on authentication state.
 
-### Optimización de la lista
+### List optimization
 
-Para mostrar eficientemente 2000 elementos, se utiliza:
+To efficiently display 2000 items, the following are used:
 
-1. Virtualización con React Window: Solo renderiza los elementos visibles en la ventana del usuario.
-2. Lazy loading para imágenes
-3. Diseño responsivo que ajusta el número de columnas según el ancho de la pantalla
+1. Virtualization with React Window: Only renders the items visible in the user's viewport.
+2. Lazy loading for images
+3. Responsive design that adjusts the number of columns according to screen width
 
-## Mejoras teóricas propuestas
+## Proposed theoretical improvements
 
-Para optimizar las llamadas al backend:
+To optimize backend calls:
 
-1. **Paginación**: Implementar paginación del lado del servidor y cliente para cargar datos incrementalmente.
-2. **Caché**: Añadir un sistema de caché con tiempo de expiración para reducir peticiones redundantes.
-3. **Campos selectivos**: Solicitar solo los campos necesarios para reducir el tamaño de respuesta.
-4. **Compresión**: Habilitar compresión en las respuestas HTTP.
-5. **Lazy loading de módulos**: Separar código por rutas para reducir el tamaño inicial de la aplicación.
+1. **Pagination**: Implement server-side and client-side pagination to load data incrementally.
+2. **Cache**: Add a cache system with expiration time to reduce redundant requests.
+3. **Selective fields**: Request only the necessary fields to reduce response size.
+4. **Compression**: Enable compression in HTTP responses.
+5. **Module lazy loading**: Split code by routes to reduce the initial application size.
