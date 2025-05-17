@@ -1,37 +1,27 @@
 import { FixedSizeGrid } from 'react-window'
-import type { ApiItem } from 'types'
+
 import DataCard from './data-card'
+import type { CellProps, VirtualizedListProps } from 'types'
+import { CARD_DIMENSIONS } from 'constants'
+import { getColumnCount } from 'utils'
 
-interface VirtualizedListProps {
-  items: ApiItem[]
-  width: number
-}
-
-const VirtualizedList = ({ items, width }: VirtualizedListProps) => {
-  // Calculate columns based on available width
-  const getColumnCount = (width: number) => {
-    if (width < 640) return 1 // Mobile
-    if (width < 1024) return 2 // Tablet
-    if (width < 1280) return 3 // Laptop
-    return 4 // Desktop
-  }
+const VirtualizedList = (props: VirtualizedListProps) => {
+  const { items, width } = props
 
   const columnCount = getColumnCount(width)
+
   const rowCount = Math.ceil(items.length / columnCount)
 
-  // Calculate best card width
-  const cardWidth = width / columnCount
-  const cardHeight = 200 // Fixed height for cards
+  /**
+   * Calculate card width accounting for padding
+   */
+  const availableWidth = width
 
-  const Cell = ({
-    columnIndex,
-    rowIndex,
-    style,
-  }: {
-    columnIndex: number
-    rowIndex: number
-    style: React.CSSProperties
-  }) => {
+  const cardWidth = Math.floor(availableWidth / columnCount)
+
+  const Cell = (cellProps: CellProps) => {
+    const { columnIndex, rowIndex, style } = cellProps
+
     const itemIndex = rowIndex * columnCount + columnIndex
 
     if (itemIndex >= items.length) {
@@ -44,7 +34,9 @@ const VirtualizedList = ({ items, width }: VirtualizedListProps) => {
       <div
         style={{
           ...style,
-          padding: '8px',
+          padding: CARD_DIMENSIONS.PADDING / 2,
+          width: cardWidth,
+          height: CARD_DIMENSIONS.HEIGHT,
         }}
       >
         <DataCard item={item} />
@@ -53,16 +45,19 @@ const VirtualizedList = ({ items, width }: VirtualizedListProps) => {
   }
 
   return (
-    <FixedSizeGrid
-      columnCount={columnCount}
-      columnWidth={cardWidth}
-      height={800} // Fixed height or can be dynamic
-      rowCount={rowCount}
-      rowHeight={cardHeight}
-      width={width}
-    >
-      {Cell}
-    </FixedSizeGrid>
+    <div className="w-full overflow-hidden mx-auto">
+      <FixedSizeGrid
+        columnCount={columnCount}
+        columnWidth={cardWidth}
+        height={800}
+        rowCount={rowCount}
+        rowHeight={CARD_DIMENSIONS.HEIGHT}
+        width={width}
+        className="scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent"
+      >
+        {Cell}
+      </FixedSizeGrid>
+    </div>
   )
 }
 

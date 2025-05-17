@@ -1,35 +1,31 @@
-import { useState, useEffect } from 'react';
+import * as React from 'react'
+import type { WindowSize } from 'types'
 
-interface WindowSize {
-  width: number;
-  height: number;
-}
-
-const useWindowSize = (): WindowSize => {
-  const [windowSize, setWindowSize] = useState<WindowSize>({
+const useWindowSize = () => {
+  const [windowSize, setWindowSize] = React.useState<WindowSize>({
     width: window.innerWidth,
     height: window.innerHeight,
-  });
+  })
 
-  useEffect(() => {
+  React.useEffect(() => {
+    /**
+     * Update the window size state on resize
+     */
     const handleResize = () => {
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
-      });
-    };
+      })
+    }
 
-    // Add event listener
-    window.addEventListener('resize', handleResize);
-    
-    // Call handler right away to update initial size
-    handleResize();
-    
-    // Remove event listener on cleanup
-    return () => window.removeEventListener('resize', handleResize);
-  }, []); // Empty array ensures that effect is only run on mount and unmount
+    window.addEventListener('resize', handleResize)
 
-  return windowSize;
-};
+    handleResize()
 
-export default useWindowSize;
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
+  return windowSize
+}
+
+export default useWindowSize

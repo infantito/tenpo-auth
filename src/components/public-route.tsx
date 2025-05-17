@@ -12,7 +12,11 @@ const PublicRoute = () => {
     )
   }
 
-  return isAuthenticated ? <Navigate to="/home" replace /> : <Outlet />
+  if (isAuthenticated) {
+    return <Navigate to="/home" replace={true} />
+  }
+
+  return <Outlet />
 }
 
 export default PublicRoute
